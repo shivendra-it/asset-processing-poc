@@ -1,0 +1,17 @@
+rabbitmq:
+  image: rabbitmq:3-management
+  ports:
+    - "9002:15672"
+    - "5672:5672"
+api:
+  build: api/.
+  env_file: .env
+  links:
+    - rabbitmq
+  ports:
+    - "80:80"
+worker:
+  build: worker/.
+  env_file: .env
+  links:
+    - rabbitmq
